@@ -8,24 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConfig = void 0;
-const dotenv_1 = __importDefault(require("dotenv"));
+const dotenv_1 = require("dotenv");
 const mongoose_1 = require("mongoose");
-dotenv_1.default.config();
-// const URL: string = "mongodb://localhost:27017/simpleTodo";
+(0, dotenv_1.config)(); // Load environment variables from .env file
+const URL = process.env.MONGODB_URL_ONLINE;
 const dbConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, mongoose_1.connect)(`mongodb+srv://ayomideadisa83:Ayomide123@cluster0.mgleepp.mongodb.net/todochallenge?retryWrites=true&w=majority&appName=Cluster0`).then(() => {
-            console.log("Database connection established🔥❤️🔥");
-        });
-        console.log(mongoose_1.connect);
+        if (!URL) {
+            throw new Error("MongoDB connection URL is not defined");
+        }
+        yield (0, mongoose_1.connect)(URL);
+        console.log("Database connection established🔥❤️🔥");
     }
     catch (error) {
-        console.log("Error connecting to database:", error);
+        console.error("Error connecting to database:", error);
         throw error;
     }
 });
