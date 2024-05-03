@@ -6,13 +6,12 @@ import { dbConfig } from "./utils/dbConfig";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port: number | string = process.env.port || 1200;
+const port = process.env.port;
 
 const app: Application = express();
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
-
 mainApp(app);
 const server = app.listen(port, async () => {
   console.clear();
